@@ -1,170 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ArenaExtream — Free Fire Tournament</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArenaExtream Dashboard</title>
   <style>
-    :root{
-      --accent:#f97316;
-      --accent-2:#38bdf8;
-      --bg:#071020;
-      --card: rgba(2,6,23,0.86);
-      --muted: rgba(255,255,255,0.7);
-      --danger: #ff4d4f;
-      --success: #16a34a;
-      font-family: Inter, system-ui, Arial, sans-serif;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: white;
+      display: flex;
+      height: 100vh;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg);color:#fff;-webkit-font-smoothing:antialiased}
-    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
-    .card{
-      width:min(980px,100%);
-      background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45));
-      border-radius:12px; padding:18px; box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-      display:grid; grid-template-columns: 1fr 420px; gap:18px; align-items:start;
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #161b22;
+      padding: 20px;
+      border-right: 1px solid #222;
+      display: flex;
+      flex-direction: column;
     }
-    .left{
-      padding:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
-      border-radius:10px;
-      min-height:200px;
-      display:flex; flex-direction:column; gap:12px;
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #58a6ff;
     }
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{
-      width:72px; height:72px; border-radius:12px; 
-      background: linear-gradient(45deg,var(--accent),var(--accent-2));
-      display:flex; align-items:center; justify-content:center; 
-      font-weight:800; font-size:20px; color:#071020;
+    .sidebar button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #21262d;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
     }
-    h1{ margin:0; font-size:1.4rem; color:var(--accent-2)}
-    .sub{ color:var(--muted); font-size:0.9rem; margin-top:2px}
-    .form { background:var(--card); padding:18px; border-radius:10px;}
-    .field { margin-bottom:12px; }
-    label{ display:block; font-size:0.85rem; margin-bottom:6px; color:var(--muted) }
-    input[type="text"], input[type="email"], input[type="tel"] {
-      width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02); color:#fff; font-size:0.95rem;
+    .sidebar button:hover {
+      background: #30363d;
     }
-    input:focus{ outline:none; border-color:var(--accent-2)}
-    button.primary{
-      width:100%; padding:12px; border-radius:10px; border:0; font-weight:700; cursor:pointer;
-      background: linear-gradient(90deg,var(--accent), var(--accent-2));
-      color:#071020; font-size:1rem;
+
+    /* Main */
+    .main {
+      flex-grow: 1;
+      padding: 25px;
     }
-    .foot{ text-align:center; padding:10px; color:var(--muted); font-size:0.85rem }
-    @media (max-width:880px){.card{ grid-template-columns: 1fr; padding:12px }.left{ order:2 } .form{ order:1 }}
-    img.profile { border-radius:50%; margin:10px 0; }
-    .logout-btn { background:#ff4b2b; color:#fff; padding:10px 16px; border:none; border-radius:8px; cursor:pointer; }
+    .welcome {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .highlight {
+      color: #ff6a00;
+      font-weight: bold;
+    }
+
+    /* Project cards */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      color: #58a6ff;
+    }
+    .card p {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* Buttons */
+    .primary {
+      background: linear-gradient(90deg,#ff6a00,#ee0979);
+      color: white;
+    }
+    .logout {
+      background: #f44336;
+      color: white;
+    }
+
+    /* Inputs */
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: white;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: 0.3s;
+    }
+    input:focus, textarea:focus {
+      border-color: #ff6a00;
+      outline: none;
+      box-shadow: 0 0 6px rgba(255,106,0,0.5);
+    }
+    input[type="file"] {
+      background: #161b22;
+      border: 1px dashed #444;
+      cursor: pointer;
+      padding: 10px;
+    }
   </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>ArenaExtream</h2>
+    <button onclick="fakeLogin()">Login</button>
+    <button onclick="showRegistration()">Register</button>
+    <button onclick="logout()" class="logout">Logout</button>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="welcome">Hello, <span class="highlight" id="userName">Guest</span> 🎮</div>
+
+    <h2>Your Projects</h2>
+    <div class="projects">
+      <div class="card">
+        <h3>Arenaextream</h3>
+        <p>ID: arenaextream-16146</p>
+      </div>
+      <div class="card">
+        <h3>No project linked</h3>
+        <p>arenaextream</p>
+      </div>
+      <div class="card">
+        <h3>No project linked</h3>
+        <p>arenaextream</p>
+      </div>
+    </div>
+
+    <!-- Registration form -->
+    <div id="registerBox" class="card" style="margin-top:30px; display:none;">
+      <h3>Registration Form</h3>
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <input type="text" id="uid" placeholder="Free Fire UID" required>
+      <input type="text" id="ign" placeholder="In-Game Name" required>
+      <input type="text" id="team" placeholder="Team Name">
+      <input type="file" id="gameIdPhoto" accept="image/*">
+      <input type="text" id="captcha" placeholder="Type FIRE" required>
+      <button onclick="sendToWhatsApp()" class="primary">Submit</button>
+    </div>
+  </div>
+
   <script>
-    // Handle Google Login
-    function handleCredentialResponse(response) {
-      const data = JSON.parse(atob(response.credential.split(".")[1]));
-      document.getElementById("google-name").value = data.name;
-      document.getElementById("email").value = data.email;
-      document.getElementById("userPic").src = data.picture;
-      document.getElementById("userBox").style.display = "block";
+    function fakeLogin(){
+      document.getElementById("userName").innerText = "Vinay Krishna";
+      alert("Logged in successfully!");
     }
 
     function logout(){
-      document.getElementById("userBox").style.display = "none";
-      document.getElementById("google-name").value = "";
-      document.getElementById("email").value = "";
+      document.getElementById("userName").innerText = "Guest";
+      alert("You are logged out!");
     }
 
-    // Send Registration to WhatsApp
-    function sendToWhatsApp(e){
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const phone = document.getElementById("phone").value;
-      const uid = document.getElementById("uid").value;
-      const ign = document.getElementById("ign").value;
-      const email = document.getElementById("email").value;
-      const team = document.getElementById("team").value;
-      const captcha = document.getElementById("captcha").value;
+    function showRegistration(){
+      document.getElementById("registerBox").style.display = "block";
+    }
 
-      if(captcha.toUpperCase() !== "FIRE"){
-        alert("Captcha incorrect! Please type FIRE.");
-        return;
-      }
+    function sendToWhatsApp(){
+      let name=document.getElementById("name").value;
+      let phone=document.getElementById("phone").value;
+      let uid=document.getElementById("uid").value;
+      let ign=document.getElementById("ign").value;
+      let team=document.getElementById("team").value;
+      let captcha=document.getElementById("captcha").value;
 
-      let msg = `🔥 ArenaExtream Registration 🔥%0A
-Full Name: ${name}%0A
-Phone: ${phone}%0A
-UID: ${uid}%0A
-IGN: ${ign}%0A
-Email: ${email}%0A
-Team: ${team}`;
+      if(captcha.toUpperCase()!=="FIRE"){alert("Captcha incorrect!"); return;}
+
+      let msg=`🔥 ArenaExtream Registration 🔥%0A
+      Name: ${name}%0A
+      Phone: ${phone}%0A
+      UID: ${uid}%0A
+      IGN: ${ign}%0A
+      Team: ${team}`;
 
       window.open(`https://wa.me/919453242943?text=${msg}`, "_blank");
     }
   </script>
-</head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <div class="left">
-        <div class="brand">
-          <div class="logo">AE</div>
-          <div>
-            <h1>ArenaExtream — Free Fire Tournament</h1>
-            <div class="sub">CEO: Vinay Krishna — Co-founder: Sparsh</div>
-          </div>
-        </div>
-        <p style="font-size:0.9rem; color:var(--muted)">Register with real info only. Fake entries will be rejected.</p>
-        <div id="g_id_onload"
-            data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse"
-            data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard" data-size="large"></div>
-        <div id="userBox" style="display:none; margin-top:10px;">
-          <img id="userPic" width="60" height="60" class="profile"><br>
-          <button class="logout-btn" onclick="logout()">Logout</button>
-        </div>
-      </div>
-
-      <div class="form">
-        <form id="regForm" onsubmit="sendToWhatsApp(event)">
-          <input id="google-name" name="google-name" type="hidden"/>
-          <div class="field">
-            <label for="name">Full Name *</label>
-            <input id="name" name="name" type="text" required/>
-          </div>
-          <div class="field">
-            <label for="phone">Phone Number *</label>
-            <input id="phone" name="phone" type="tel" required/>
-          </div>
-          <div class="row">
-            <div class="col field">
-              <label for="uid">Free Fire UID *</label>
-              <input id="uid" name="uid" type="text" required/>
-            </div>
-            <div class="col field">
-              <label for="ign">In-Game Name (IGN) *</label>
-              <input id="ign" name="ign" type="text" required/>
-            </div>
-          </div>
-          <div class="field">
-            <label for="email">Email (auto from Google if logged in)</label>
-            <input id="email" name="email" type="email"/>
-          </div>
-          <div class="field">
-            <label for="team">Squad / Team Name</label>
-            <input id="team" name="team" type="text"/>
-          </div>
-          <div class="field">
-            <label for="captcha">Type the word <b>FIRE</b></label>
-            <input id="captcha" name="captcha" type="text" required/>
-          </div>
-          <button type="submit" class="primary">Register</button>
-          <div class="foot">CEO: Vinay Krishna — Co-founder: Sparsh</div>
-        </form>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
